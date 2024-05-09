@@ -4,14 +4,10 @@ package taskB;
  * This class defines basic aspects of a Process
  */
 public class Process {
-
-
-    // Private variables
     private int reference_number;
     private int operation;
     private int argument;
 
-    // Default constructor
     private Process() {
     }
 
@@ -46,5 +42,4 @@ public class Process {
     public boolean isDeallocating() {
         return getOperation() == 2;
     }
-
 }

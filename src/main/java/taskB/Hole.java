@@ -4,9 +4,6 @@ package taskB;
  * This class serves the purpose of storing the size of the block in memory.
  */
 public class Hole {
-
-
-    // base and limit values
     private int start;
     private int end;
 
@@ -14,9 +11,9 @@ public class Hole {
      * Default constructor.
      * Sets the first hole the size of the maximum space, and is free.
      */
-    Hole() {
+    public Hole() {
         start = 0;
-        end = Lab9.TOTAL_BYTES - 1;
+        end = TaskB.TOTAL_BYTES - 1;
     }
 
     /**
@@ -25,7 +22,7 @@ public class Hole {
      * @param start start byte of the hole.
      * @param end   end byte of the hole.
      */
-    Hole(int start, int end) {
+    public Hole(int start, int end) {
         this.start = start;
         this.end = end;
     }

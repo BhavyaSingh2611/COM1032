@@ -43,6 +43,7 @@ public class CutCommand implements Command {
         List<Integer> parsedFields = parseField(field);
 
         try {
+            // If there is no file, process the output stream
             if (fileName == null) {
                 List<String> temp = new ArrayList<>(outputStream.size());
                 while (!outputStream.isEmpty()) {
@@ -81,14 +82,20 @@ public class CutCommand implements Command {
         List<Integer> fields = new ArrayList<>();
         String[] split = field.split(",");
         for (String s : split) {
+            // If the element contains a dash, it represents a range
             if (s.contains("-")) {
+                // Split the element by dash to get the start and end of the range
                 String[] range = s.split("-");
                 int start = Integer.parseInt(range[0]);
                 int end = Integer.parseInt(range[1]);
+
+                // Add all numbers in the range to the fields list
                 for (int i = start; i <= end; i++) {
                     fields.add(i);
                 }
             } else {
+                // If the element doesn't contain a dash, it's a single number
+                // Parse the number and add it to the fields list
                 fields.add(Integer.parseInt(s));
             }
         }

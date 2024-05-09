@@ -30,6 +30,7 @@ public class SortCommand implements Command {
 
         List<String> temp = new ArrayList<>(outputStream.size());
         try {
+            // If there is no file, process the output stream
             if (fileName == null) {
                 while (!outputStream.isEmpty()) {
                     String data = outputStream.poll();

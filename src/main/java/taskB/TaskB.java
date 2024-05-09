@@ -1,6 +1,10 @@
 package taskB;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 /**
  * Main function for memory management.
@@ -20,36 +24,17 @@ public class TaskB {
      * NOTE: you should read the process input from taskB.txt instead of putting it
      * in the Java file
      */
-    private static int[][] alloc = { /* memory size is 1024 */
-            // Example 1
-            /*
-             * {1, 1, 30}, //Process 1 is allocating 30 bytes {2, 1, 40}, //Process 2 is
-             * allocating 40 bytes {3, 1, 50}, {4, 2, 1}
-             */
+    private static List<int[]> alloc = new ArrayList<>();
 
-            // Example 2
-            /*
-             * {1, 1, 300}, {2, 1, 150}, {3, 1, 200}, {4, 2, 1}
-             */
-
-            // Example 3: more processes
-
-            {1, 1, 150}, {2, 1, 20}, {3, 1, 150}, {4, 1, 20}, {5, 1, 150}, {6, 1, 20}, {7, 1, 150},
-            {8, 1, 20}, {9, 1, 150}, {10, 1, 20}, {11, 1, 150}, {12, 1, 20}, {13, 2, 2}, {14, 2, 4},
-            {15, 2, 6}, {16, 2, 8}, {17, 2, 10}, {18, 2, 12}, {19, 1, 20}, {20, 1, 21}, {21, 1, 125}
-
-    };
-
-    // Keep track of all processes created
-    private static ArrayList<Process> listof_processes;
+    private static ArrayList<Process> listOfProcesses;
 
     public static void createProcesses() {
         Process proc;
 
-        listof_processes = new ArrayList<>();
-        for (int i = 0; i < alloc.length; i++) {
-            proc = new Process(alloc[i][0], alloc[i][1], alloc[i][2]);
-            listof_processes.add(proc);
+        listOfProcesses = new ArrayList<>();
+        for (int[] parts : alloc) {
+            proc = new Process(parts[0], parts[1], parts[2]);
+            listOfProcesses.add(proc);
         }
     }
 
@@ -60,22 +45,32 @@ public class TaskB {
      * If it succeeds it will print 'Success'.
      */
     private static void firstFit() {
-
         MainMemory manager = new MainMemory();
         manager.insertAtStart(new Block());
 
-        for (Process proc : listof_processes) {
+        for (Process proc : listOfProcesses) {
 
             if (proc.isAllocating()) {
                 boolean placed = manager.firstFitInsert(proc);
                 // externalFragmentation has not been implemented
-                /*
-                 * if(!placed){ System.out.println("Request " + proc.getReference_number() +
-                 * " failed at allocating " + proc.getArgument() + " bytes." );
-                 * System.out.println("External Fragmentation is " +
-                 * manager.externalFragmentation() + " bytes."); //memory print
-                 * manager.printBlocks(); return; }
-                 */
+                if (!placed) {
+                    System.out.println("Request " + proc.getReference_number() + " failed at allocating " + proc.getArgument() + " bytes.");
+                    System.out.println("External Fragmentation is " + manager.externalFragmentation() + " bytes.");
+                    // memory print
+                    manager.printBlocks();
+                    manager.compactMemory();
+                    System.out.println("-------After Compaction ------");
+                    manager.printBlocks();
+
+                    boolean retryAfterCompact = manager.bestFitInsert(proc);
+                    if (retryAfterCompact) {
+                        System.out.println("Request " + proc.getReference_number() + " failed at allocating " + proc.getArgument() + " bytes.");
+                        System.out.println("External Fragmentation is " + manager.externalFragmentation() + " bytes.");
+                        return;
+                    }
+
+                    //manager.printBlocks();
+                }
             } else if (proc.isDeallocating()) {
                 manager.deallocateBlock(proc.getArgument());
             }
@@ -93,22 +88,28 @@ public class TaskB {
      * If it succeeds it will print 'Success'.
      */
     private static void bestFit() {
-
         MainMemory manager = new MainMemory();
         manager.insertAtStart(new Block());
 
-        for (Process proc : listof_processes) {
-
+        for (Process proc : listOfProcesses) {
             if (proc.isAllocating()) {
                 boolean placed = manager.bestFitInsert(proc);
                 // you should calculate the total bytes of the external fragmentation
                 if (!placed) {
-                    System.out.println("Request " + proc.getReference_number() + " failed at allocating "
-                            + proc.getArgument() + " bytes.");
+                    System.out.println("Request " + proc.getReference_number() + " failed at allocating " + proc.getArgument() + " bytes.");
                     System.out.println("External Fragmentation is " + manager.externalFragmentation() + " bytes.");
                     // memory print
                     manager.printBlocks();
-                    return;
+                    manager.compactMemory();
+                    System.out.println("-------After Compaction ------");
+                    manager.printBlocks();
+
+                    boolean retry = manager.bestFitInsert(proc);
+                    if (!retry) {
+                        System.out.println("Request " + proc.getReference_number() + " failed at allocating " + proc.getArgument() + " bytes.");
+                        System.out.println("External Fragmentation is " + manager.externalFragmentation() + " bytes.");
+                        return;
+                    }
                 }
             } else if (proc.isDeallocating()) {
                 manager.deallocateBlock(proc.getArgument());
@@ -120,15 +121,25 @@ public class TaskB {
     }
 
     public static void main(String[] args) {
+        // Read the input from the file
+        try {
+            File taskFile = new File("taskB.csv");
+            Scanner fileReader = new Scanner(taskFile);
+            while (fileReader.hasNextLine()) {
+                String data = fileReader.nextLine();
+                String[] parts = data.split(",");
+
+                int[] intParts = {Integer.parseInt(parts[0]), Integer.parseInt(parts[1]), Integer.parseInt(parts[2])};
+                alloc.add(intParts);
+            }
+            fileReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("taskB.csv not found.");
+        }
 
         createProcesses();
 
-        System.out.println("----------First Fit - for demo only, you can remove this part ---------");
-        firstFit();
-
-        System.out.println("----------Best Fit - to be implemented ---------");
+        System.out.println("----------Best Fit----------");
         bestFit();
-
     }
-
 }

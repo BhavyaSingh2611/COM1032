@@ -5,11 +5,8 @@ package taskB;
  * That is, we start linking blocks together
  */
 public class BlockNode {
-
-    //current block and a link to the next block
     private Block block;
     private BlockNode next;
-
 
     /**
      * Default constructor
@@ -19,16 +16,15 @@ public class BlockNode {
         block = null;
     }
 
-
     /**
      * Constructor of BlockNode
      *
-     * @param d Block of memory at this node
-     * @param n next node linked to current node
+     * @param block Block of memory at this node
+     * @param next next node linked to current node
      */
-    public BlockNode(Block d, BlockNode n) {
-        this.block = d;
-        this.next = n;
+    public BlockNode(Block block, BlockNode next) {
+        this.block = block;
+        this.next = next;
     }
 
     /**
@@ -37,16 +33,16 @@ public class BlockNode {
      * @return next BlockNode linked to current.
      */
     public BlockNode getNext() {
-        return next;
+        return this.next;
     }
 
     /**
      * Setter for the next BlockNode link
      *
-     * @param n next BlockNode to be linked to
+     * @param next next BlockNode to be linked to
      */
-    public void setNext(BlockNode n) {
-        next = n;
+    public void setNext(BlockNode next) {
+        this.next = next;
     }
 
     /**
@@ -61,10 +57,9 @@ public class BlockNode {
     /**
      * Sets the block of memory for current node.
      *
-     * @param d Block to be set.
+     * @param block Block to be set.
      */
-    public void setBlock(Block d) {
-        block = d;
+    public void setBlock(Block block) {
+        this.block = block;
     }
-
 }

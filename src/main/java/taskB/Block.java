@@ -5,15 +5,9 @@ package taskB;
  * storing the process accessing that memory, and size of the memory hole.
  */
 public class Block {
-
-
-    // Process and size of memory hole
-    // Look at the end of this file for the definition of Hole
     private Process proc;
     private Hole hole;
 
-
-    // Default constructor with maximum memory allocation
     public Block() {
         proc = null;
         hole = new Hole();
@@ -53,7 +47,7 @@ public class Block {
      * If the block is available and the proc is allocating and the bytes to be placed are within this blocks size
      * then it can be placed.
      *
-     * @param proc Process to check if can be placed at this block
+     * @param proc Process to check if it can be placed at this block
      * @return True if it can be placed, false if it cannot.
      */
     public boolean canPlace(Process proc) {
@@ -73,7 +67,7 @@ public class Block {
      * This method is a setter for the Process in this block.
      * Set null to free block, or adding Process to the block.
      *
-     * @param j Job to be set.
+     * @param proc process to be set.
      */
     public void setProcess(Process proc) {
         this.proc = proc;

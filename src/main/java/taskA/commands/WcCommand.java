@@ -32,6 +32,7 @@ public class WcCommand implements Command {
         int words = 0;
         int bytes = 0;
         try {
+            // If there is no file, process the output stream
             if (fileName == null) {
                 while (!outputStream.isEmpty()) {
                     String data = outputStream.poll();
