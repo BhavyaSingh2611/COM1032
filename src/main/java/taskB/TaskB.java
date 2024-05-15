@@ -39,49 +39,6 @@ public class TaskB {
     }
 
     /**
-     * This method runs the First Fit Memory Allocation simulation using a linked
-     * list. Loops through the Processes in the Process list and allocates
-     * appropriately. If it cannot allocate, it will fail and print why accordingly.
-     * If it succeeds it will print 'Success'.
-     */
-    private static void firstFit() {
-        MainMemory manager = new MainMemory();
-        manager.insertAtStart(new Block());
-
-        for (Process proc : listOfProcesses) {
-
-            if (proc.isAllocating()) {
-                boolean placed = manager.firstFitInsert(proc);
-                // externalFragmentation has not been implemented
-                if (!placed) {
-                    System.out.println("Request " + proc.getReference_number() + " failed at allocating " + proc.getArgument() + " bytes.");
-                    System.out.println("External Fragmentation is " + manager.externalFragmentation() + " bytes.");
-                    // memory print
-                    manager.printBlocks();
-                    manager.compactMemory();
-                    System.out.println("-------After Compaction ------");
-                    manager.printBlocks();
-
-                    boolean retryAfterCompact = manager.bestFitInsert(proc);
-                    if (retryAfterCompact) {
-                        System.out.println("Request " + proc.getReference_number() + " failed at allocating " + proc.getArgument() + " bytes.");
-                        System.out.println("External Fragmentation is " + manager.externalFragmentation() + " bytes.");
-                        return;
-                    }
-
-                    //manager.printBlocks();
-                }
-            } else if (proc.isDeallocating()) {
-                manager.deallocateBlock(proc.getArgument());
-            }
-        }
-
-        System.out.println("Success");
-        // memory print
-        manager.printBlocks();
-    }
-
-    /**
      * This method runs the Best Fit Memory Allocation simulation using a linked
      * list. Loops through the Processes in the Process list and allocates
      * appropriately. If it cannot allocate, it will fail and print why accordingly.
@@ -96,7 +53,7 @@ public class TaskB {
                 boolean placed = manager.bestFitInsert(proc);
                 // you should calculate the total bytes of the external fragmentation
                 if (!placed) {
-                    System.out.println("Request " + proc.getReference_number() + " failed at allocating " + proc.getArgument() + " bytes.");
+                    System.out.println("Request " + proc.getReferenceNumber() + " failed at allocating " + proc.getArgument() + " bytes.");
                     System.out.println("External Fragmentation is " + manager.externalFragmentation() + " bytes.");
                     // memory print
                     manager.printBlocks();
@@ -106,7 +63,7 @@ public class TaskB {
 
                     boolean retry = manager.bestFitInsert(proc);
                     if (!retry) {
-                        System.out.println("Request " + proc.getReference_number() + " failed at allocating " + proc.getArgument() + " bytes.");
+                        System.out.println("Request " + proc.getReferenceNumber() + " failed at allocating " + proc.getArgument() + " bytes.");
                         System.out.println("External Fragmentation is " + manager.externalFragmentation() + " bytes.");
                         return;
                     }

@@ -56,60 +56,6 @@ public class MainMemory {
     }
 
     /**
-     * First fit insert, this method goes through the linked list finding the
-     * first place it can insert the block into memory.
-     *
-     * @param proc to insert into memory
-     * @return True if successfully inserted block of memory, False if failed.
-     */
-    public boolean firstFitInsert(Process proc) {
-        Block block = new Block(proc);
-        BlockNode nptr = new BlockNode(block, null);
-
-        if (start == null) {
-            start = nptr;
-            end = start;
-            return true;
-        } else {
-
-            BlockNode curr = start;
-
-            //look at all available slots/holes in memory
-            //select the first available position of suitable size for block
-            while (curr != null) {
-
-                //enough available space in memory identified
-                if (curr.getBlock().canPlace(block.getProcess())) {
-
-                    //get the end memory location for available block curr
-                    int end = curr.getBlock().getHole().getEnd();
-
-                    //add the process in memory
-                    curr.getBlock().setProcess(block.getProcess());
-
-                    //take only what we need from memory
-                    int block_start = curr.getBlock().getHole().getStart();
-                    int memory_needs = block.getProcess().getArgument();
-                    curr.getBlock().getHole().setRange(block_start, block_start + memory_needs - 1);
-
-                    //create a new block with the rest of memory we don't need
-                    //notice curr.getBlock().getHole().getEnd() was changed by line 155
-                    if (curr.getBlock().getHole().getEnd() < end) {
-                        BlockNode newBlock = new BlockNode(
-                                new Block(null, new Hole(curr.getBlock().getHole().getEnd() + 1, end)), curr.getNext());
-
-                        curr.setNext(newBlock);
-                    }
-                    size++;
-                    return true;
-                }
-                curr = curr.getNext();
-            }
-            return false;
-        }
-    }
-
-    /**
      * Best fit insert, this method goes through the linked list finding the
      * best place it can insert the block into memory.
      *
@@ -243,44 +189,6 @@ public class MainMemory {
      * compact memory, this method goes through the current memory blocks
      * and moves all the blocks to the start of memory.
      */
-//    public void compactMemory() {
-//        BlockNode newStart = null;
-//        BlockNode newEnd = null;
-//        int totalMemoryUsed = 0;
-//
-//        // Iterate through the linked list of memory blocks
-//        for (BlockNode curr = start; curr != null; curr = curr.getNext()) {
-//            // If a block has a process, create a new block with the process
-//            if (curr.getBlock().getProcess() != null) {
-//                // Create a new Hole object for the Block
-//                Hole newHole = new Hole(totalMemoryUsed, totalMemoryUsed + curr.getBlock().getSize() - 1);
-//                BlockNode newNode = new BlockNode(new Block(curr.getBlock().getProcess(), newHole), null);
-//                totalMemoryUsed += curr.getBlock().getSize();
-//
-//                // Add the new block to the new start pointer
-//                if (newStart == null) {
-//                    newStart = newNode;
-//                    newEnd = newStart;
-//                } else {
-//                    newEnd.setNext(newNode);
-//                    newEnd = newNode;
-//                }
-//            }
-//        }
-//
-//        // Create a new block with the remaining free memory
-//        BlockNode freeMemoryNode = new BlockNode(new Block(null, new Hole(totalMemoryUsed, TaskB.TOTAL_BYTES - 1)), null);
-//
-//        // Add the free memory block to the new start pointer
-//        if (newStart == null) {
-//            newStart = freeMemoryNode;
-//        } else {
-//            newEnd.setNext(freeMemoryNode);
-//        }
-//
-//        // Replace the old start pointer with the new one
-//        start = newStart;
-//    }
     public void compactMemory() {
         int totalMemoryUsed = 0;
         BlockNode prev = null;
@@ -293,7 +201,6 @@ public class MainMemory {
                 curr.getBlock().getHole().setRange(totalMemoryUsed, totalMemoryUsed + curr.getBlock().getSize() - 1);
                 totalMemoryUsed += curr.getBlock().getSize();
                 prev = curr;
-                curr = curr.getNext();
             } else {
                 // If a block doesn't have a process, remove it from the linked list
                 if (prev != null) {
@@ -301,8 +208,8 @@ public class MainMemory {
                 } else {
                     start = curr.getNext();
                 }
-                curr = curr.getNext();
             }
+            curr = curr.getNext();
         }
 
         // Create a new block with the remaining free memory
@@ -331,7 +238,7 @@ public class MainMemory {
         while (ptr != null) {
 
             if (ptr.getBlock().getProcess() != null) {
-                if (ptr.getBlock().getProcess().getReference_number() == process_number) {
+                if (ptr.getBlock().getProcess().getReferenceNumber() == process_number) {
                     ptr.getBlock().setProcess(null);
                     joinBlocks();
                     return;

@@ -4,7 +4,7 @@ package taskB;
  * This class defines basic aspects of a Process
  */
 public class Process {
-    private int reference_number;
+    private int referenceNumber;
     private int operation;
     private int argument;
 
@@ -12,19 +12,19 @@ public class Process {
     }
 
     /**
-     * @param reference_number A reference number (a unique identifier for that operation)
+     * @param referenceNumber A reference number (a unique identifier for that operation)
      * @param operation        An operation (either 1 for allocate? or 2 for de-allocate?)
      * @param argument         An argument (a size in bytes for an allocate operation;
      *                         a reference number for a de-allocate operation)
      */
-    public Process(int reference_number, int operation, int argument) {
-        this.reference_number = reference_number;
+    public Process(int referenceNumber, int operation, int argument) {
+        this.referenceNumber = referenceNumber;
         this.operation = operation;
         this.argument = argument;
     }
 
-    public int getReference_number() {
-        return this.reference_number;
+    public int getReferenceNumber() {
+        return this.referenceNumber;
     }
 
     public int getOperation() {

@@ -1,4 +1,4 @@
-# After the memory access 0x0FFF
+# After the memory access 0x0FDA
 #Address, Result (Hit, Miss, PageFault)
 0x0FDA,Miss	
 #updated TLB
@@ -21,7 +21,7 @@
 9,0,Disk                    	
 10,1,3                       	
 11,1,12
-# after memory access 0x7A28	
+# After memory access 0x7A36
 #Address, Result (Hit, Miss, PageFault)
 0x7A36,Hit	
 #updated TLB

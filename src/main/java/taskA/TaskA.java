@@ -17,7 +17,6 @@ public class TaskA {
         System.out.println("Please enter your commands - cat, cut, sort, uniq, wc or |");
 
         String commandLine;
-        String filePath = "taskA.txt";
 
         BufferedReader console = new BufferedReader(new InputStreamReader(System.in));
         while (true) {

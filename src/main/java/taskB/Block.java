@@ -93,7 +93,7 @@ public class Block {
         String allocated = "free";
 
         if (!available()) {
-            allocated = "allocated to Process " + proc.getReference_number();
+            allocated = "allocated to Process " + proc.getReferenceNumber();
         }
 
         System.out.printf("[%d-%d): %s\n", start, end + 1, allocated);
