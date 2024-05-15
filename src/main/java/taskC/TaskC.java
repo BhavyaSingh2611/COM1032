@@ -37,7 +37,7 @@ public class TaskC {
         List<String> tlbEntries = new ArrayList<>();
         List<String> pageTableEntries = new ArrayList<>();
         for (int i = initialAddressIndex + 1; i < initialTLBIndex - 1; i++) {
-            virtualAddresses.add(Integer.parseInt(fileContents.get(i).split("x")[1], 16));
+            virtualAddresses.add(Integer.decode(fileContents.get(i)));
         }
 
         for (int i = initialTLBIndex + 1; i < initialPageTableIndex - 1; i++) {

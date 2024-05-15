@@ -1,4 +1,4 @@
-#After the memory access 0x0FDA
+# After the memory access 0x0FDA
 #Address, Result (Hit, Miss, PageFault)
 0x0FDA,Miss
 #updated TLB
@@ -21,7 +21,7 @@
 9,0,Disk
 10,1,3
 11,1,12
-#After the memory access 0x7A36
+# After the memory access 0x7A36
 #Address, Result (Hit, Miss, PageFault)
 0x7A36,Hit
 #updated TLB
@@ -44,7 +44,7 @@
 9,0,Disk
 10,1,3
 11,1,12
-#After the memory access 0x3C2D
+# After the memory access 0x3C2D
 #Address, Result (Hit, Miss, PageFault)
 0x3C2D,Hit
 #updated TLB
@@ -67,7 +67,7 @@
 9,0,Disk
 10,1,3
 11,1,12
-#After the memory access 0x3A13
+# After the memory access 0x3A13
 #Address, Result (Hit, Miss, PageFault)
 0x3A13,Hit
 #updated TLB
@@ -90,7 +90,7 @@
 9,0,Disk
 10,1,3
 11,1,12
-#After the memory access 0x1B29
+# After the memory access 0x1B29
 #Address, Result (Hit, Miss, PageFault)
 0x1B29,Page fault
 #updated TLB
@@ -113,7 +113,7 @@
 9,0,Disk
 10,1,3
 11,1,12
-#After the memory access 0x1030
+# After the memory access 0x1030
 #Address, Result (Hit, Miss, PageFault)
 0x1030,Hit
 #updated TLB
@@ -136,7 +136,7 @@
 9,0,Disk
 10,1,3
 11,1,12
-#After the memory access 0x22C2
+# After the memory access 0x22C2
 #Address, Result (Hit, Miss, PageFault)
 0x22C2,Page fault
 #updated TLB
