@@ -26,7 +26,7 @@ public class TaskB {
      */
     private static List<int[]> alloc = new ArrayList<>();
 
-    private static ArrayList<Process> listOfProcesses;
+    private static List<Process> listOfProcesses;
 
     public static void createProcesses() {
         Process proc;
